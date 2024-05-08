@@ -1,7 +1,11 @@
 <template>
   <label
     class="easy-checkbox"
-    :class="{ 'is-checked': checked, 'is-disabled': disabled }"
+    :class="{
+      'is-checked': checked,
+      'is-disabled': disabled,
+      indeterminate,
+    }"
     :style="{ width: fineSize, height: fineSize }"
     @click="onClick"
   >
@@ -33,6 +37,13 @@
       <template v-else>
         <span class="empty"></span>
       </template>
+      <input
+        class="easy-checkbox__original"
+        type="checkbox"
+        v-model="checked"
+        :name="name"
+        :value="label"
+      />
     </span>
   </label>
 </template>
@@ -49,6 +60,10 @@ export default class EasyCheckbox extends Vue {
   private size!: string | number;
   @Prop({ type: Boolean, default: false })
   private disabled!: boolean;
+  @Prop({ type: String })
+  private name: string | undefined;
+  @Prop({ type: String })
+  private label: string | undefined;
 
   private get fineSize() {
     if (typeof this.size === "number") return `${this.size}px`;
@@ -57,13 +72,13 @@ export default class EasyCheckbox extends Vue {
 
   private onClick() {
     if (!this.disabled) {
-      this.toChange(!this.checked);
+      // this.toChange(!this.checked);
     }
   }
 
   @Emit("change")
   private toChange(newVal: boolean) {
-    this.checked = newVal;
+    // this.checked = newVal;
   }
 }
 </script>
@@ -80,7 +95,8 @@ $icon-size: 80%;
   cursor: pointer;
   user-select: none;
 
-  &.is-checked {
+  &.is-checked,
+  &.indeterminate {
     .easy-checkbox__inner {
       background-color: $primary-clr;
       border-color: $primary-clr;
@@ -108,6 +124,7 @@ $icon-size: 80%;
 
   .easy-checkbox__inner {
     box-sizing: border-box;
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -118,6 +135,13 @@ $icon-size: 80%;
 
     &:hover {
       border-color: $primary-clr;
+    }
+
+    .easy-checkbox__original {
+      position: absolute;
+      outline: none;
+      margin: 0;
+      bottom: -20px;
     }
 
     .icon-tick,

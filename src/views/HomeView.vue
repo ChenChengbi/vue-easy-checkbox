@@ -4,18 +4,26 @@
       class="cb"
       v-model="checked1"
       :size="20"
+      :name="'test'"
       @change="onChange1"
     />
     <EasyCheckbox class="cb" v-model="checked2" :size="20" />
     <EasyCheckbox
       class="cb"
-      :value="true"
+      :value="false"
       :size="20"
       :disabled="false"
       :indeterminate="true"
     />
     <EasyCheckbox class="cb" v-model="checked3" :size="20" :disabled="true" />
     <EasyCheckbox class="cb" v-model="checked4" :size="20" :disabled="true" />
+    <EasyCheckbox
+      class="cb"
+      v-model="checked5"
+      :size="20"
+      :disabled="true"
+      :indeterminate="true"
+    />
   </div>
 </template>
 
@@ -29,6 +37,7 @@ export default class HomeView extends Vue {
   private checked2 = false;
   private checked3 = true;
   private checked4 = false;
+  private checked5 = false;
 
   private onChange1(checked: boolean) {
     console.log("checked :>> ", checked);
