@@ -1,4 +1,5 @@
 <template>
+  <!-- https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/checkbox#%E4%B8%BA%E5%A4%8D%E9%80%89%E6%A1%86%E6%8F%90%E4%BE%9B%E7%A8%8D%E5%A4%A7%E7%9A%84%E7%82%B9%E5%87%BB%E5%8C%BA%E5%9F%9F -->
   <label
     class="easy-checkbox"
     :class="{
@@ -6,10 +7,19 @@
       'is-disabled': disabled,
       indeterminate,
     }"
-    :style="{ width: fineSize, height: fineSize }"
-    @click="onClick"
   >
-    <span class="easy-checkbox__inner">
+    <template v-if="label && !isLabelBehind">
+      <LabelText
+        class="easy-checkbox__label in-front"
+        :height="fineSize"
+        :label="label"
+      />
+    </template>
+
+    <span
+      class="easy-checkbox__inner"
+      :style="{ width: fineSize, height: fineSize }"
+    >
       <template v-if="indeterminate">
         <svg
           class="icon-dash"
@@ -41,52 +51,78 @@
         class="easy-checkbox__original"
         type="checkbox"
         v-model="checked"
+        :disabled="disabled"
         :name="name"
-        :value="label"
+        :value="originalValue"
+        @change="onChange"
       />
     </span>
+
+    <template v-if="label && isLabelBehind">
+      <LabelText
+        class="easy-checkbox__label"
+        :height="fineSize"
+        :label="label"
+      />
+    </template>
   </label>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, VModel, Emit } from "vue-property-decorator";
+import { Vue, Component, VModel, Prop, Emit } from "vue-property-decorator";
+import LabelText from "./LabelText.vue";
 
-@Component
+@Component({ components: { LabelText } })
 export default class EasyCheckbox extends Vue {
   @VModel({ type: Boolean, default: false })
+  /** 绑定的值，表示当前是否勾选(默认 false) */
   private checked!: boolean;
+
   @Prop({ type: Boolean, default: false })
+  /** 当前是否处于选与非选之间的中间状态(只控制样式) */
   private indeterminate!: boolean;
+
   @Prop({ type: [String, Number], default: "14px" })
+  /** 复选框的边长(默认 14px) */
   private size!: string | number;
+
   @Prop({ type: Boolean, default: false })
+  /** 当前是否处于禁用状态(默认 false) */
   private disabled!: boolean;
+
   @Prop({ type: String })
+  /** 原生复选框的 name 属性 */
   private name: string | undefined;
+
+  @Prop({ type: String, default: "on" })
+  /** 原生复选框的 value 属性 */
+  private originalValue: string | undefined;
+
   @Prop({ type: String })
+  /** 复选框旁边的提示文字 */
   private label: string | undefined;
 
-  private get fineSize() {
+  @Prop({ type: Boolean, default: true })
+  /** 提示文字是否位于复选框的后方，否则在前方(默认 true) */
+  private isLabelBehind!: boolean;
+
+  private get fineSize(): string {
     if (typeof this.size === "number") return `${this.size}px`;
     else return this.size;
   }
 
-  private onClick() {
-    if (!this.disabled) {
-      // this.toChange(!this.checked);
-    }
+  private onChange(evt: Event) {
+    this.change((evt.target as HTMLInputElement).checked);
   }
 
   @Emit("change")
-  private toChange(newVal: boolean) {
-    // this.checked = newVal;
-  }
+  private change(checked: boolean) {}
 }
 </script>
 <style lang="scss" scoped>
 $primary-clr: #409eff;
 $border-clr: #dcdfe6;
+$disabled-clr: #c0c4cc;
 $disabled-bg-clr: #f2f6fc;
-$disabled-icon-clr: #c0c4cc;
 $icon-size: 80%;
 
 .easy-checkbox {
@@ -94,6 +130,7 @@ $icon-size: 80%;
   display: inline-block;
   cursor: pointer;
   user-select: none;
+  line-height: 1;
 
   &.is-checked,
   &.indeterminate {
@@ -108,6 +145,12 @@ $icon-size: 80%;
     }
   }
 
+  &.is-checked {
+    .easy-checkbox__label {
+      color: $primary-clr;
+    }
+  }
+
   &.is-disabled {
     cursor: not-allowed;
 
@@ -117,8 +160,12 @@ $icon-size: 80%;
 
       .icon-tick,
       .icon-dash {
-        fill: $disabled-icon-clr;
+        fill: $disabled-clr;
       }
+    }
+
+    .easy-checkbox__label {
+      color: $disabled-clr;
     }
   }
 
@@ -127,7 +174,7 @@ $icon-size: 80%;
     position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     border: 1px solid $border-clr;
@@ -141,7 +188,11 @@ $icon-size: 80%;
       position: absolute;
       outline: none;
       margin: 0;
-      bottom: -20px;
+      bottom: -16px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      z-index: -1;
     }
 
     .icon-tick,
@@ -153,6 +204,17 @@ $icon-size: 80%;
     .empty {
       width: $icon-size;
       height: $icon-size;
+    }
+  }
+
+  .easy-checkbox__label {
+    display: inline-block;
+    vertical-align: baseline;
+    padding-left: 8px;
+
+    &.in-front {
+      padding-left: 0;
+      padding-right: 8px;
     }
   }
 }
