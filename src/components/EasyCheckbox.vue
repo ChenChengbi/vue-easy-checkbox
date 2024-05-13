@@ -73,21 +73,25 @@ import LabelText from "./LabelText.vue";
 
 @Component({ components: { LabelText } })
 export default class EasyCheckbox extends Vue {
-  @VModel({ type: Boolean, default: false })
-  /** 绑定的值，表示当前是否勾选(默认 false) */
+  @VModel({ type: Boolean, required: true })
+  /** 绑定的值，表示当前是否勾选 */
   private checked!: boolean;
 
-  @Prop({ type: Boolean, default: false })
-  /** 当前是否处于选与非选之间的中间状态(只控制样式) */
-  private indeterminate!: boolean;
-
   @Prop({ type: [String, Number], default: "14px" })
-  /** 复选框的边长(默认 14px) */
+  /** 复选框的边长 */
   private size!: string | number;
 
+  @Prop({ type: String })
+  /** 复选框旁边的提示文字 */
+  private label: string | undefined;
+
   @Prop({ type: Boolean, default: false })
-  /** 当前是否处于禁用状态(默认 false) */
+  /** 是否处于禁用状态 */
   private disabled!: boolean;
+
+  @Prop({ type: Boolean, default: false })
+  /** 是否处于选与非选之间的中间状态(只控制样式) */
+  private indeterminate!: boolean;
 
   @Prop({ type: String })
   /** 原生复选框的 name 属性 */
@@ -97,12 +101,8 @@ export default class EasyCheckbox extends Vue {
   /** 原生复选框的 value 属性 */
   private originalValue: string | undefined;
 
-  @Prop({ type: String })
-  /** 复选框旁边的提示文字 */
-  private label: string | undefined;
-
   @Prop({ type: Boolean, default: true })
-  /** 提示文字是否位于复选框的后方，否则在前方(默认 true) */
+  /** 提示文字是否位于复选框的后方，否则在前方 */
   private isLabelBehind!: boolean;
 
   private get fineSize(): string {
