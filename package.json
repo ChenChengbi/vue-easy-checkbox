@@ -21,7 +21,7 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build:doc": "vue-cli-service build --dest doc",
+    "build:doc": "vue-cli-service build --dest docs",
     "build:lib": "npm run build:umd & npm run build:es & npm run build:unpkg",
     "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/vue-easy-checkbox.umd.js",
     "build:es": "rollup --config build/rollup.config.js --format es --file dist/vue-easy-checkbox.esm.js",
