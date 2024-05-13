@@ -2,6 +2,9 @@
 
 > 多选框的 vue 封装，提供灵活的样式定制，尤其是多选框的尺寸可自定义
 
+## 🌰 示例
+https://chenchengbi.github.io/vue-easy-checkbox/#/
+
 ## 📦 安装
 ``` bash
 $ npm i vue-easy-checkbox
