@@ -81,6 +81,10 @@ export default class EasyCheckbox extends Vue {
   /** 复选框的边长 */
   private size!: string | number;
 
+  @Prop({ type: String })
+  /** 复选框旁边的提示文字 */
+  private label: string | undefined;
+
   @Prop({ type: Boolean, default: false })
   /** 是否处于禁用状态 */
   private disabled!: boolean;

@@ -1,7 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs'; // Convert CommonJS modules to ES6
 import vue from 'rollup-plugin-vue'; // Handle .vue SFC files
-import buble from '@rollup/plugin-buble'; // Transpile/polyfill with reasonable browser support
 import typescript2 from 'rollup-plugin-typescript2';
+import { babel } from '@rollup/plugin-babel';
 
 export default {
     input: 'src/wrapper.js', // Path relative to package.json
@@ -23,12 +23,9 @@ export default {
             css: true, // Dynamically inject css as a <style> tag
             compileTemplate: true, // Explicitly convert template to render function
         }),
-        buble({
-            objectAssign: true,
-            transforms: {
-                asyncAwait: false,
-                forOf: false,
-            }
-        }), // Transpile to ES5
+        babel({
+            babelHelpers: 'runtime',
+            exclude: 'node_modules/**'
+        }),
     ],
 };
