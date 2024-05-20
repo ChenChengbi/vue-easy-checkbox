@@ -2,6 +2,10 @@
 
 > 多选框的 vue 封装，提供灵活的样式定制，尤其是多选框的尺寸可自定义
 
+![效果图1](https://raw.githubusercontent.com/ChenChengbi/vue-easy-checkbox/master/screenshot/demo-snapshot.png)
+
+[English](./README.en-US.md) | 中文
+
 ## 🌰 示例
 https://chenchengbi.github.io/vue-easy-checkbox/#/
 
