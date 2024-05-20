@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <div class="row">
-      <div class="title">不带文字</div>
+      <div class="title">Without Label</div>
       <div class="content">
         <EasyCheckbox
           class="cb"
-          v-model="checked1"
+          v-model="checked11"
           :size="size"
           :name="'test'"
         />
-        <EasyCheckbox class="cb" v-model="checked2" :size="size" />
+        <EasyCheckbox class="cb" v-model="checked12" :size="size" />
         <EasyCheckbox
           class="cb"
           :value="false"
@@ -20,18 +20,18 @@
     </div>
 
     <div class="row">
-      <div class="title">带文字</div>
+      <div class="title">With Label</div>
       <div class="content">
         <EasyCheckbox
           class="cb"
-          v-model="checked3"
+          v-model="checked21"
           :size="size"
           :label="'我是标题'"
           @change="onChange"
         />
         <EasyCheckbox
           class="cb"
-          v-model="checked6"
+          v-model="checked22"
           :size="size"
           :label="'我是标题在前'"
           :isLabelBehind="false"
@@ -40,30 +40,30 @@
     </div>
 
     <div class="row">
-      <div class="title">禁用</div>
+      <div class="title">Disabled</div>
       <div class="content">
         <EasyCheckbox
           class="cb"
-          v-model="checked3"
+          v-model="checked21"
           :size="size"
           :disabled="true"
         />
         <EasyCheckbox
           class="cb"
-          v-model="checked4"
+          v-model="checked32"
           :size="size"
           :disabled="true"
         />
         <EasyCheckbox
           class="cb"
-          v-model="checked5"
+          v-model="checked33"
           :size="size"
           :disabled="true"
           :indeterminate="true"
         />
         <EasyCheckbox
           class="cb"
-          v-model="checked3"
+          v-model="checked21"
           :size="size"
           :disabled="true"
           :label="'我是标题但禁用'"
@@ -72,7 +72,18 @@
     </div>
 
     <div class="row">
-      <div class="title">模拟提交表单</div>
+      <div class="title">Customized Size</div>
+      <div class="content">
+        <EasyCheckbox class="cb" v-model="checked41" :size="12" />
+        <EasyCheckbox class="cb" v-model="checked42" :size="16" />
+        <EasyCheckbox class="cb" v-model="checked43" :size="20" />
+        <EasyCheckbox class="cb" v-model="checked44" :size="32" />
+        <EasyCheckbox class="cb" v-model="checked45" :size="40" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="title">Form Submission</div>
       <div class="content">
         <!-- https://developer.mozilla.org/zh-CN/docs/Learn/Forms/Your_first_form -->
         <form method="post">
@@ -85,14 +96,14 @@
             <label class="label">Habits:</label>
             <EasyCheckbox
               class="cb"
-              v-model="checked7"
+              v-model="checked51"
               :size="14"
               :label="'Make Money'"
               :name="'makeMoney'"
             />
             <EasyCheckbox
               class="cb"
-              v-model="checked8"
+              v-model="checked52"
               :size="14"
               :label="'Spend Money'"
               :name="'spendMoney'"
@@ -100,7 +111,7 @@
           </div>
 
           <div class="button">
-            <button type="submit">Send your message</button>
+            <button type="submit">模拟提交表单</button>
           </div>
         </form>
       </div>
@@ -114,14 +125,20 @@ import EasyCheckbox from "@/components/EasyCheckbox.vue";
 
 @Component({ components: { EasyCheckbox } })
 export default class HomeView extends Vue {
-  private checked1 = true;
-  private checked2 = false;
-  private checked3 = true;
-  private checked4 = false;
-  private checked5 = false;
-  private checked6 = true;
-  private checked7 = false;
-  private checked8 = true;
+  private checked11 = true;
+  private checked12 = false;
+  private checked21 = true;
+  private checked22 = true;
+  private checked32 = false;
+  private checked33 = false;
+  private checked51 = false;
+  private checked52 = true;
+
+  private checked41 = true;
+  private checked42 = true;
+  private checked43 = true;
+  private checked44 = true;
+  private checked45 = true;
 
   private size = 20;
 
