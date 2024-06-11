@@ -1,6 +1,7 @@
 {
   "name": "vue-easy-checkbox",
-  "version": "0.1.4",
+  "version": "0.1.5",
+  "description": "多选框的 vue 封装，提供灵活的样式定制，尤其是多选框的尺寸可自定义",
   "keywords": [
     "checkbox",
     "vue"
